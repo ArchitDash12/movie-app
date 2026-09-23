@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <a href="#-live-demo"><img src="https://img.shields.io/badge/Demo-Live%20Preview-blue?style=for-the-badge&logo=vercel" alt="Live Demo" /></a>
+  <a href="https://cinepulse-phi.vercel.app/"><img src="https://img.shields.io/badge/Demo-Live%20Preview-blue?style=for-the-badge&logo=vercel" alt="Live Demo" /></a>
   <img src="https://img.shields.io/badge/React-19.2-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React 19" />
   <img src="https://img.shields.io/badge/Vite-8.3-646C9F?style=for-the-badge&logo=vite&logoColor=white" alt="Vite" />
   <img src="https://img.shields.io/badge/Tailwind_CSS-v4.3-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS" />
@@ -21,17 +21,14 @@
 
 ## 🌐 Live Demo
 
-<!-- PLACEHOLDER FOR LIVE DEPLOYMENT LINK -->
-> 🚀 **Live Deployment**: *Deployment link coming soon!*  
-> [![Visit Live App](https://img.shields.io/badge/Live_Site-Click_Here-success?style=for-the-badge&logo=googlechrome&logoColor=white)](YOUR_DEPLOYMENT_URL_HERE)
-
-*(Provide your production URL to update this section)*
+> 🚀 **Live Deployment**: [cinepulse-phi.vercel.app](https://cinepulse-phi.vercel.app/)  
+> [![Visit Live App](https://img.shields.io/badge/Live_Site-Visit%20CinePulse-success?style=for-the-badge&logo=vercel&logoColor=white)](https://cinepulse-phi.vercel.app/)
 
 ---
 
 ## 📖 Overview
 
-**CinePulse** is a responsive, fast web application for discovering trending and popular movies. Powered by **The Movie Database (TMDB)** API for live movie data and **Appwrite Cloud** as a serverless backend-as-a-service (BaaS), the application dynamically tracks search queries and curates a real-time **Top 5 Trending Movies** leaderboard based on actual user activity.
+**CinePulse** is a fast, responsive web application for discovering trending and popular movies. Powered by **The Movie Database (TMDB)** API for live movie data and **Appwrite Cloud** as a serverless backend-as-a-service (BaaS), the application dynamically tracks search queries and curates a real-time **Top 5 Trending Movies** leaderboard based on actual user activity.
 
 Built with **React 19**, **Vite**, and **Tailwind CSS v4**, CinePulse delivers smooth animations, dark-mode aesthetics, debounced API calls for optimal performance, and robust error handling.
 
@@ -68,7 +65,7 @@ Built with **React 19**, **Vite**, and **Tailwind CSS v4**, CinePulse delivers s
 
 ## 🏗️ Architecture & Data Flow
 
-```
+```text
 [ User Searches Movie ]
          │
          ▼
@@ -131,6 +128,9 @@ VITE_APPWRITE_PROJECT_ID=your_appwrite_project_id
 VITE_APPWRITE_DATABASE_ID=your_appwrite_database_id
 VITE_APPWRITE_COLLECTION_ID=your_appwrite_collection_id
 ```
+
+> **Note for Vercel / Netlify Deployments**:  
+> Remember to add these exact 4 environment variables in your deployment dashboard (**Settings** > **Environment Variables**) and trigger a redeployment!
 
 ### 4. Setup Appwrite Database
 

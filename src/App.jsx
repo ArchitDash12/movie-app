@@ -30,6 +30,12 @@ const App = () => {
     setIsLoading(true);
     setErrorMessage('');
 
+    if (!API_KEY) {
+      setErrorMessage("TMDB API key is not configured. Please add VITE_TMDB_API_KEY in your environment variables.");
+      setIsLoading(false);
+      return;
+    }
+
     try{
       const endpoint = query 
         ? `${API_BASE_URL}/search/movie?query=${encodeURI(query)}`
@@ -50,7 +56,7 @@ const App = () => {
 
       setMovieList(data.results || []);
 
-      if(query && data.results.length > 0){
+      if(query && data.results && data.results.length > 0){
         await updateSearchCount(query, data.results[0]);
       }
     }
@@ -66,11 +72,11 @@ const App = () => {
   const loadTrendingMovies = async () => {
     try{
       const movies = await getTrendingMovies();
-
-      setTrendingMovies(movies);
+      setTrendingMovies(movies || []);
     }
     catch(error){
       console.error(`Error fetching trending movies: ${error}`);
+      setTrendingMovies([]);
     }
   }
 
@@ -89,21 +95,21 @@ const App = () => {
 
       <div className="wrapper">
         <header>
-          <img src="./hero-img.svg" alt="Hero Banner" />
+          <img src="/hero-img.svg" alt="Hero Banner" />
           <h1>Find <span className='text-gradient'>Movies</span> You'll Enjoy Without the Hassle</h1>
           <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
         </header>
 
-        {trendingMovies.length > 0 && (
+        {trendingMovies && trendingMovies.length > 0 && (
           <section className='trending'>
             <h2>Trending Movies</h2>
 
             <ul>
               {trendingMovies.map((movie, index) => (
-                <li key={movie.$id}>
+                <li key={movie.$id || index}>
                   <p>{index + 1}</p>
-                  <img src={movie.poster_url} alt={movie.title} />
+                  <img src={movie.poster_url} alt={movie.title || 'Trending Movie'} />
                 </li>
               ))}
             </ul>
