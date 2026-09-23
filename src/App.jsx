@@ -5,14 +5,14 @@ import Spinner from './components/Spinner.jsx';
 import MovieCard from './components/MovieCard.jsx';
 import { getTrendingMovies, updateSearchCount } from './appwrite.js';
 
-const API_BASE_URL = "https://api.themoviedb.org/3";
+const API_BASE_URL = "/api/tmdb";
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
 const API_OPTIONS = {
   method: 'GET',
   headers: {
     accept: 'application/json',
-    Authorization: `Bearer ${API_KEY}`
+    ...(API_KEY ? { Authorization: `Bearer ${API_KEY}` } : {}),
   }
 }
 
@@ -30,12 +30,6 @@ const App = () => {
     setIsLoading(true);
     setErrorMessage('');
 
-    if (!API_KEY) {
-      setErrorMessage("TMDB API key is not configured. Please add VITE_TMDB_API_KEY in your environment variables.");
-      setIsLoading(false);
-      return;
-    }
-
     try{
       const endpoint = query 
         ? `${API_BASE_URL}/search/movie?query=${encodeURI(query)}`
@@ -43,13 +37,16 @@ const App = () => {
       const response = await fetch(endpoint, API_OPTIONS);
 
       if(!response.ok){
+        if (response.status === 401) {
+          throw new Error("TMDB API key is invalid or not configured. Check VITE_TMDB_API_KEY in environment variables.");
+        }
         throw new Error("Failed to fetch movies");
       }
 
       const data = await response.json();
 
-      if(data.response === 'False'){
-        setErrorMessage(data.Error  || "Failed to fetch movies");
+      if(data.success === false || data.response === 'False'){
+        setErrorMessage(data.status_message || data.Error || "Failed to fetch movies");
         setMovieList([]);
         return;
       }
